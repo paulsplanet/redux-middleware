@@ -1,12 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
 import Sample from "../components/Sample";
+import { getPost, getUsers } from "../modules/sample";
 
 const { useEffect } = React;
 const SampleContainer = ({ getPost, getUsers, post, users, loadingPost, loadingUsers }) => {
     useEffect(() => {
-        getPost(1);
-        getUsers(1);
+        const fn = async () => {
+            try {
+                await getPost(1);
+                await getUsers(1);
+            } catch (e) {
+                console.log(e);
+            }    
+        };
+        fn();    
     }, [getPost, getUsers]);
 
     return (
@@ -15,11 +23,13 @@ const SampleContainer = ({ getPost, getUsers, post, users, loadingPost, loadingU
 };
 
 export default connect(
-    ({ sample }) => ({
+    ({ sample, loading }) => ({
         post: sample.post,
         users: sample.users,
-        loadingPost: sample.loading.GET_POST,
-        loadingUsers: sample.loading.GET_USERS
+        //loadingPost: sample.loading.GET_POST,
+        //loadingUsers: sample.loading.GET_USERS
+        loadingPost: loading["sample/GET_POST"],
+        loadingUsers: loading["sampel/GET_USERS"],
     }),
     {
         getPost,
