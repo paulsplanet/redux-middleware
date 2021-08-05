@@ -6,6 +6,8 @@ const App = () => {
   return (
     <div>
       <CounterContainer />
+      <hr />
+      <SampleContainer />
     </div>
   )
 }
